@@ -6,6 +6,7 @@ import urllib.request
 output_data = []
 keys = ['_id', 'description', 'isFree', 'name',
         'tags', 'ageRestriction', ['category', 'sysName']]
+stop_words = []
 query = json.loads(urllib.request.urlopen(
     'https://all.culture.ru/api/2.2/events?limit=1&offset=0'
     ).read().decode('utf-8'))
@@ -26,6 +27,9 @@ for i in range(query):
                     for tag in event['tags']:
                         output_data[-1]['tags'].append(tag['name'])
                 elif key == 'description':
+                    for i in stop_words:
+                        if i in event[key]:
+                            event[key] = event[key].replace(i, '')
                     output_data[-1][key] = re.sub('[!@#$.,:;?\'"]', '', event[key])
                 elif isinstance(key, list):
                     # Если вложенный список, то значение ключа = словарь.
