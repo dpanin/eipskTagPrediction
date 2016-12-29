@@ -1,5 +1,6 @@
 import json
 from math import ceil
+import re
 import urllib.request
 
 output_data = []
@@ -24,6 +25,8 @@ for i in range(query):
                     output_data[-1]['tags'] = []
                     for tag in event['tags']:
                         output_data[-1]['tags'].append(tag['name'])
+                elif key == 'description':
+                    output_data[-1][key] = re.sub('[!@#$.,:;?\'"]', '', event[key])
                 elif isinstance(key, list):
                     # Если вложенный список, то значение ключа = словарь.
                     output_data[-1][key[0]] = {}
