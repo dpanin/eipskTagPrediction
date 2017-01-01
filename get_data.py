@@ -22,10 +22,14 @@ for i in range(query):
             output_data.append({})
             for key in keys:
                 if key == 'tags':
-                    # Добавляем имена тегов в список
+                    # Добавляем теги в список tags
                     output_data[-1]['tags'] = []
                     for tag in event['tags']:
                         output_data[-1]['tags'].append(tag['name'])
+                    # Добавляем латинские теги в список tags_system
+                    output_data[-1]['tags_system'] = []
+                    for tag in event['tags']:
+                        output_data[-1]['tags_system'].append(tag['sysName'])                    
                 elif key == 'description':
                     for i in stop_words:
                         if i in event[key]:
