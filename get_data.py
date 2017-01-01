@@ -15,7 +15,7 @@ for i in range(query):
     print('Выполняю запрос {0} из {1}'.format(i+1, query))
     json_data = urllib.request.urlopen(
         'https://all.culture.ru/api/2.2/events?limit=100&offset={0}'.format(i))
-    json_data = json_data.read()
+    json_data = json_data.read().decode('utf-8')
     json_data = json.loads(json_data)
     for event in json_data['events']:
         if event['tags'] != []:
