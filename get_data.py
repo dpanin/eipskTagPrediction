@@ -3,6 +3,7 @@ from math import ceil
 from re import sub
 from urllib.request import urlopen
 
+
 output_data = []
 keys = ['_id', 'description', 'isFree', 'name',
         'tags', 'ageRestriction', ['category', 'sysName']]
@@ -29,7 +30,7 @@ for i in range(query):
                     # Добавляем латинские теги в список tags_system
                     output_data[-1]['tags_system'] = []
                     for tag in event['tags']:
-                        output_data[-1]['tags_system'].append(tag['sysName'])                    
+                        output_data[-1]['tags_system'].append(tag['sysName'])
                 elif key == 'description':
                     for i in stop_words:
                         if i in event[key]:
@@ -42,7 +43,8 @@ for i in range(query):
                         output_data[-1][key[0]] = {}
                         for index in range(1, len(key)):
                             # В словарь добавляем требуемые значения.
-                            output_data[-1][key[0]][key[index]] = event[key[0]][key[index]]
+                            output_data[-1][key[0]][
+                                        key[index]] = event[key[0]][key[index]]
                     else:
                         output_data[-1][key[0]] = event[key[0]][key[1]]
                 else:
