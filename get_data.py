@@ -1,19 +1,19 @@
 import json
 from math import ceil
-import re
-import urllib.request
+from re import sub
+from urllib.request import urlopen
 
 output_data = []
 keys = ['_id', 'description', 'isFree', 'name',
         'tags', 'ageRestriction', ['category', 'sysName']]
 stop_words = []
-query = json.loads(urllib.request.urlopen(
+query = json.loads(urlopen(
     'https://all.culture.ru/api/2.2/events?limit=1&offset=0'
     ).read().decode('utf-8'))
 query = ceil(int(query['total'])/100)  # Округление в бОльшую сторону.
 for i in range(query):
     print('Выполняю запрос {0} из {1}'.format(i+1, query))
-    json_data = urllib.request.urlopen(
+    json_data = urlopen(
         'https://all.culture.ru/api/2.2/events?limit=100&offset={0}'.format(i))
     json_data = json_data.read().decode('utf-8')
     json_data = json.loads(json_data)
@@ -34,7 +34,7 @@ for i in range(query):
                     for i in stop_words:
                         if i in event[key]:
                             event[key] = event[key].replace(i, '')
-                    output_data[-1][key] = re.sub('[!@#$.,:;?\'"]', '', event[key])
+                    output_data[-1][key] = sub('[!@#$.,:;?\'"]', '', event[key])
                 elif isinstance(key, list):
                     # Если более 1 вложенного ключа, то создаем внутри словарь.
                     if len(key) > 2:
