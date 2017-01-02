@@ -36,12 +36,15 @@ for i in range(query):
                             event[key] = event[key].replace(i, '')
                     output_data[-1][key] = re.sub('[!@#$.,:;?\'"]', '', event[key])
                 elif isinstance(key, list):
-                    # Если вложенный список, то значение ключа = словарь.
-                    output_data[-1][key[0]] = {}
-                    for index in range(1, len(key)):
-                        # В словарь добавляем требуемые значения.
-                        output_data[-1][key[0]][key[index]
-                                                ] = event[key[0]][key[index]]
+                    # Если более 1 вложенного ключа, то создаем внутри словарь.
+                    if len(key) > 2:
+                        # Если вложенный список, то значение ключа = словарь.
+                        output_data[-1][key[0]] = {}
+                        for index in range(1, len(key)):
+                            # В словарь добавляем требуемые значения.
+                            output_data[-1][key[0]][key[index]] = event[key[0]][key[index]]
+                    else:
+                        output_data[-1][key[0]] = event[key[0]][key[1]]
                 else:
                     output_data[-1][key] = event[key]
 print('Записываю в файл.')
