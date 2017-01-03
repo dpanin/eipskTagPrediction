@@ -5,6 +5,7 @@ from urllib.request import urlopen
 from queue import Queue
 from threading import Thread
 
+
 keys = ['_id', 'description', 'isFree', 'name',
         'tags', 'ageRestriction', ['category', 'sysName']]
 stop_words = []
@@ -90,7 +91,7 @@ def main():
     query = ceil(int(query['total'])/100)
     for i in range(query):
         queue.put(
-            (i, 'https://all.culture.ru/api/2.2/events?limit=100&offset={0}'.format(i)))
+            (i, 'https://all.culture.ru/api/2.2/events?limit=100&offset={0}'.format(i*100)))
     queue.join()
     save_data(processed_data)
     print('Done')
