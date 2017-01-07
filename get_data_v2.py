@@ -38,8 +38,10 @@ def data_processing(json_data):
                     for i in stop_words:
                         if i in event[key]:
                             event[key] = event[key].replace(i, '')
-                    output_data[-
-                                1][key] = sub('[!@#$.,:;?\'"]', '', event[key])
+                    output_data[-1][key] = sub(
+                        '(<[^>]*>)|(&nbsp;)|[«»"|\/!()@#$.,:;?\'"]|(\\n)',
+                        '',
+                        event[key])
                 elif isinstance(key, list):
                     # Если более 1 вложенного ключа, то создаем внутри словарь.
                     if len(key) > 2:
