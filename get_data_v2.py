@@ -58,7 +58,7 @@ def data_processing(json_data):
 
 def save_data(data):
     with open('output.json', 'w', encoding='utf-8') as f:
-        json.dump({'events': data}, f, ensure_ascii=False)
+        json.dump(data, f, ensure_ascii=False)
 
 
 class DownloadWorker(Thread):
